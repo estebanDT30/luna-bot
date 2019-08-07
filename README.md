@@ -5,3 +5,5 @@
 ### AKA: GameBoy0665
 
 Another bot for Discord. Hoping to being able to do a lot of incredible functions. House made.
+
+*For now, a pending project. Sorry, doesn't expect frequent updates.*
