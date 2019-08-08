@@ -6,4 +6,4 @@
 
 Another bot for Discord. Hoping to being able to do a lot of incredible functions. House made.
 
-*For now, a pending project. Sorry, doesn't expect frequent updates.*
+*For now, a hobby. A pending project. Sorry, doesn't expect frequent updates.*
