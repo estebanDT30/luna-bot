@@ -1,4 +1,4 @@
-const { prefix, token, userID, ownerID } = require("./config.json");
+const { prefix, token, userID, ownerID } = require("./assets/vars/config.json");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
