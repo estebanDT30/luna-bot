@@ -18,12 +18,15 @@ client.on('message', message => {
 	}
 
 	if (!args) {
-		console.log(prefix);
 		return message.channel.send("El prefijo actual es: " + prefix);
 	}
 
+	if (command === "help") {
+
+	}
+
 	if (command === "ping") {
-		message.channel.send("Pong!");
+		message.channel.send("pong");
 	}
 
 	if (command === "say") {
