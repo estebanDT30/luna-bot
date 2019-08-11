@@ -80,15 +80,7 @@ client.on('message', message => {
 		if (command !== "") {
 			if (command === "help") {
 				if (!args) {
-					return message.channel.send(
-						"Lista de Comandos: " +
-						"\n```" +
-						"\nhelp" +
-						"\nflip" +
-						"\nroll" +
-						"\nping" +
-						"\nsay" +
-						"```"
+					return message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```"
 					);
 				}
 				else {
@@ -135,7 +127,7 @@ client.on('message', message => {
 			}
 		}
 		else {
-			message.channel.send("El prefijo es: " + prefix);
+			message.channel.send("El prefijo es: `" + prefix + "`.");
 		}
 	}
 });
