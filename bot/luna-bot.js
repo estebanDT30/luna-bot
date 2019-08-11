@@ -138,11 +138,6 @@ client.on('message', message => {
 			message.channel.send("El prefijo es: " + prefix);
 		}
 	}
-
-	
-
-
-	
 })
 
 client.login(token);
