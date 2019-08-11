@@ -1,3 +1,7 @@
+function getRndInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
 const { prefix, token, userID, ownerID } = require("./assets/vars/config.json");
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -25,8 +29,20 @@ client.on('message', message => {
 
 	}
 
+	if (command === "flip") {
+		var randomNumber = getRndInt(1, 2);
+		if (randomNumber = 1) {
+			message.channel.send("Ha salido cara.");
+		}
+		else {
+			if (randomNumber = 2) {
+				message.channel.send("Ha salido escudo.");
+			}
+		}
+	}
+
 	if (command === "ping") {
-		message.channel.send("pong");
+		message.channel.send("Pong.");
 	}
 
 	if (command === "say") {
