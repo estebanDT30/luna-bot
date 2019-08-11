@@ -31,12 +31,14 @@ client.on('message', message => {
 
 	if (command === "flip") {
 		console.log("Entró");
-		if (getRndInt(1, 2) == 1) {
+		var randomNumber = 0;
+		randomNumber = getRndInt(1, 2);
+		if (randomNumber == 1) {
 			console.log("1");
 			message.channel.send("Ha salido cara.");
 		}
 		else {
-			if (getRndInt(1, 2) == 2) {
+			if (randomNumber == 2) {
 				console.log("2");
 				message.channel.send("Ha salido escudo.");
 			}
