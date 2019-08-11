@@ -76,61 +76,66 @@ client.on('message', message => {
 			return message.channel.send("Introduzca algunos parámetros");
 		}
 		*/
-
-		if (command === "help") {
-			if (!args) {
-				return message.channel.send(
-					"Lista de Comandos: " +
-					"\n```" +
-					"\nhelp" +
-					"\nflip" +
-					"\nroll" +
-					"\nping" +
-					"\nsay" +
-					"```"
-				);
-			}
-			else {
-				
-			}
-		}
-
-		if (command === "flip") {
-			var randomNumber = 0;
-			randomNumber = getRndInt(1, 2);
-
-			if (randomNumber === 1) {
-				message.channel.send("Ha salido **cara**.");
-			}
-			else {
-				if (randomNumber === 2) {
-					message.channel.send("Ha salido **escudo**.");
+	
+		if (command === "") {
+			if (command === "help") {
+				if (!args) {
+					return message.channel.send(
+						"Lista de Comandos: " +
+						"\n```" +
+						"\nhelp" +
+						"\nflip" +
+						"\nroll" +
+						"\nping" +
+						"\nsay" +
+						"```"
+					);
 				}
 				else {
-					message.channel.send("ERROR: Contactar administrador.");
+					
 				}
 			}
-		}
 
-		if (command === "roll") {
-			
-		}
+			if (command === "flip") {
+				var randomNumber = 0;
+				randomNumber = getRndInt(1, 2);
 
-		if (command === "ping") {
-			message.channel.send("Pong.");
-		}
+				if (randomNumber === 1) {
+					message.channel.send("Ha salido **cara**.");
+				}
+				else {
+					if (randomNumber === 2) {
+						message.channel.send("Ha salido **escudo**.");
+					}
+					else {
+						message.channel.send("ERROR: Contactar administrador.");
+					}
+				}
+			}
 
-		if (command === "say") {
-			console.log(args);
-			message.channel.send(content);
-		}
+			if (command === "roll") {
+				
+			}
 
-		if (command === "nick") {
-			message.guild.members.get(client.user.id).setNickname("Luna");
-		}
+			if (command === "ping") {
+				message.channel.send("Pong.");
+			}
 
-		if (command === "kill") {
-			client.destroy();
+			if (command === "say") {
+				console.log(args);
+				message.channel.send(content);
+			}
+
+			if (command === "nick") {
+				message.guild.members.get(client.user.id).setNickname("Luna");
+			}
+
+			if (command === "kill") {
+				client.destroy();
+			}
+		}
+		else {
+			message.channel.send("El prefijo es: " + prefix);
 		}
 	}
 
