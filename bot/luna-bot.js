@@ -70,51 +70,67 @@ client.on('message', message => {
 		return ;
 	}
 	else {
+		/*
+		Para verificar si un comando tiene argumentos.
 		if (!args) {
-			return message.channel.send("El prefijo actual es: " + prefix);
+			return message.channel.send("Introduzca algunos parámetros");
 		}
-		else {
-			if (command === "help") {
+		*/
 
+		if (command === "help") {
+			if (!args) {
+				return message.channel.send(
+					"Lista de Comandos: " +
+					"\n```" +
+					"\nhelp" +
+					"\nflip" +
+					"\nroll" +
+					"\nping" +
+					"\nsay" +
+					"```"
+				);
 			}
-
-			if (command === "flip") {
-				var randomNumber = 0;
-				randomNumber = getRndInt(1, 2);
-
-				if (randomNumber === 1) {
-					message.channel.send("Ha salido **cara**.");
-				}
-				else {
-					if (randomNumber === 2) {
-						message.channel.send("Ha salido **escudo**.");
-					}
-					else {
-						message.channel.send("ERROR: Contactar administrador.");
-					}
-				}
-			}
-
-			if (command === "roll") {
+			else {
 				
 			}
+		}
 
-			if (command === "ping") {
-				message.channel.send("Pong.");
-			}
+		if (command === "flip") {
+			var randomNumber = 0;
+			randomNumber = getRndInt(1, 2);
 
-			if (command === "say") {
-				console.log(args);
-				message.channel.send(content);
+			if (randomNumber === 1) {
+				message.channel.send("Ha salido **cara**.");
 			}
+			else {
+				if (randomNumber === 2) {
+					message.channel.send("Ha salido **escudo**.");
+				}
+				else {
+					message.channel.send("ERROR: Contactar administrador.");
+				}
+			}
+		}
 
-			if (command === "nick") {
-				message.guild.members.get(client.user.id).setNickname("Luna");
-			}
+		if (command === "roll") {
+			
+		}
 
-			if (command === "kill") {
-				client.destroy();
-			}
+		if (command === "ping") {
+			message.channel.send("Pong.");
+		}
+
+		if (command === "say") {
+			console.log(args);
+			message.channel.send(content);
+		}
+
+		if (command === "nick") {
+			message.guild.members.get(client.user.id).setNickname("Luna");
+		}
+
+		if (command === "kill") {
+			client.destroy();
 		}
 	}
 
