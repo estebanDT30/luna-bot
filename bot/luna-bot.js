@@ -77,7 +77,7 @@ client.on('message', message => {
 		}
 		*/
 	
-		if (command === "") {
+		if (command !== "") {
 			if (command === "help") {
 				if (!args) {
 					return message.channel.send(
@@ -92,7 +92,7 @@ client.on('message', message => {
 					);
 				}
 				else {
-					
+
 				}
 			}
 
@@ -114,7 +114,7 @@ client.on('message', message => {
 			}
 
 			if (command === "roll") {
-				
+
 			}
 
 			if (command === "ping") {
