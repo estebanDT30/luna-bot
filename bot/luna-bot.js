@@ -23,7 +23,7 @@ client.on('message', message => {
 	- En la primera variable (args), obviamente lo primero que hacemos es tomar el contenido del mensaje.
 
 		- Con 'slice()' estamos cortando del mensaje nuestro prefijo, si nuestro prefijo es "/", un prefijo de solo un caracter, 'prefix.length' solo sería 1, por lo tanto el comando pasaría a ser solo "saludo".
-\
+
 		- 'trim()' elimina todos los espacios adicionales que puedan haber antes y después del mensaje.
 		
 		- 'split(/ +/g)' separaría el mensaje por sus espacios dejando solo un array (utilizamos RegExp en lugar de solo un espacio en caso de que haya un espacio adicional entre palabras, error muy común en los que acostumbramos a usar Discord en celular), de esta manera nos quedaría ["saludo", "Me", "llamo", Nakido]
@@ -92,7 +92,7 @@ client.on('message', message => {
 					);
 				}
 				else {
-
+					
 				}
 			}
 
@@ -114,7 +114,7 @@ client.on('message', message => {
 			}
 
 			if (command === "roll") {
-
+				
 			}
 
 			if (command === "ping") {
@@ -138,6 +138,6 @@ client.on('message', message => {
 			message.channel.send("El prefijo es: " + prefix);
 		}
 	}
-})
+});
 
 client.login(token);
