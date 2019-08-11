@@ -30,17 +30,18 @@ client.on('message', message => {
 	}
 
 	if (command === "flip") {
-		console.log("Entró");
 		var randomNumber = 0;
 		randomNumber = getRndInt(1, 2);
+
 		if (randomNumber == 1) {
-			console.log("1");
 			message.channel.send("Ha salido cara.");
 		}
 		else {
 			if (randomNumber == 2) {
-				console.log("2");
 				message.channel.send("Ha salido escudo.");
+			}
+			else {
+				
 			}
 		}
 	}
