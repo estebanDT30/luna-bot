@@ -30,11 +30,12 @@ client.on('message', message => {
 	}
 
 	if (command === "flip") {
-		if (getRndInt(1, 2) === 1) {
+		console.log("Entró");
+		if (getRndInt(1, 2) == 1) {
 			message.channel.send("Ha salido cara.");
 		}
 		else {
-			if (getRndInt(1, 2) === 2) {
+			if (getRndInt(1, 2) == 2) {
 				message.channel.send("Ha salido escudo.");
 			}
 		}
