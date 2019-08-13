@@ -1,22 +1,23 @@
 //Usar las variables de entorno.
 require('dotenv').config();
 
-//Generar un número al azar.
-function getRndInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
+const token = process.env.DISCORD_TOKEN;
+const prefix = process.env.DISCORD_PREFIX;
 
 //Constantes de desarrollo.
-const { prefix, token, userID, ownerID } = require("./assets/vars/config.json"); //Importación de variables.
 const Discord = require("discord.js"); //Importación de "discord.js".
 const client = new Discord.Client(); //Se crea una sesión.
+
+//Generar un número al azar.
+function getRndInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
 
 //Arranque de bot.
 client.on("ready", () => { 
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
 	console.log("Conectado como " + client.user.tag); //Se reporta en consola el acceso.
-	console.log(process.env.DISCORD_TOKEN);
 });
 
 //Bot listo.
