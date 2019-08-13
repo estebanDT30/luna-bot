@@ -1,4 +1,8 @@
 {
+	"engines": {
+		"node": "10.16.2",
+		"npm" : "6.9.0"
+	},
 	"name": "luna-bot",
 	"version": "1.0.0",
 	"description": "Another bot for Discord. Hoping to being able to do a lot of incredible functions. Housemade.",
