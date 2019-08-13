@@ -11,6 +11,7 @@
 	"devDependencies": {},
 	"scripts": {
 		"run:": "node bot/luna-bot.js",
+		"start": "node bot/luna-bot.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
