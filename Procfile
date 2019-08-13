@@ -1,2 +1,2 @@
-web: www/index.html
-worker: node bot/luna-bot.js
+web : www/index.html
+worker : node bot/luna-bot.js
