@@ -79,8 +79,10 @@ client.on('message', message => {
 	
 		if (command !== "") {
 			if (command === "help") {
+				var msg = "```Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```";
+
 				if (!args) {
-					return message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```");
+					return message.channel.send(msg);
 				}
 				else {
 					
