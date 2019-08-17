@@ -80,7 +80,7 @@ client.on('message', message => {
 		if (command !== "") {
 			if (command === "help") {
 				console.log(args + "\n" + content);
-				if (!args) {
+				if (content === "") {
 					message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```");
 				}
 				else {
