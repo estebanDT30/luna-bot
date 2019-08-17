@@ -26,20 +26,15 @@ client.on('message', message => {
 	Supongamos que tenemos el siguiente comando: "/saludo Me llamo Nakido".
 
 	- En la primera variable (args), obviamente lo primero que hacemos es tomar el contenido del mensaje.
-
 		- Con 'slice()' estamos cortando del mensaje nuestro prefijo, si nuestro prefijo es "/", un prefijo de solo un caracter, 'prefix.length' solo sería 1, por lo tanto el comando pasaría a ser solo "saludo".
-
 		- 'trim()' elimina todos los espacios adicionales que puedan haber antes y después del mensaje.
-		
 		- 'split(/ +/g)' separaría el mensaje por sus espacios dejando solo un array (utilizamos RegExp en lugar de solo un espacio en caso de que haya un espacio adicional entre palabras, error muy común en los que acostumbramos a usar Discord en celular), de esta manera nos quedaría ["saludo", "Me", "llamo", Nakido]
 	*/
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 
 	/*
 	- 'command' sería lo que usaremos luego para agregar comandos.
-
 		- 'args.shift()' separaría el comando del resto del mensaje ('shift()' remueve el primer objeto de un array), de esta manera 'args' solo quedaría como el resto del contenido del mensaje (["Me", "llamo", Nakido]) y lo podremos utilizar para definir parámetros adicionales en nuestros comandos.
-
 		- 'toLowerCase()' haría que todo el comando estuviera en minúsculas, así en caso de que nos equivoquemos escribiendo el comando y pongamos algo como /Saludo, funcionaría igual.
 	*/
 	const command = args.shift().toLowerCase();
@@ -84,6 +79,7 @@ client.on('message', message => {
 	
 		if (command !== "") {
 			if (command === "help") {
+				console.log(args + "\n" + content);
 				if (!args) {
 					message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```");
 				}
@@ -104,7 +100,7 @@ client.on('message', message => {
 						message.channel.send("Ha salido **escudo**.");
 					}
 					else {
-						message.channel.send("ERROR: Contactar administrador.");
+						message.channel.send("**ERROR:** Contactar administrador.");
 					}
 				}
 			}
@@ -118,7 +114,7 @@ client.on('message', message => {
 			}
 
 			if (command === "say") {
-				console.log(args);
+				console.log(args + "\n" + content);
 				message.channel.send(content);
 			}
 
