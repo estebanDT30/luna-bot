@@ -15,7 +15,7 @@ function getRndInt(min, max) {
 
 //Arranque de bot.
 client.on("ready", () => { 
-	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
+	client.user.setUsername("Luna"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
 	console.log("Conectado como " + client.user.tag); //Se reporta en consola el acceso.
 });
@@ -30,7 +30,9 @@ client.on('message', message => {
 		- 'trim()' elimina todos los espacios adicionales que puedan haber antes y después del mensaje.
 		- 'split(/ +/g)' separaría el mensaje por sus espacios dejando solo un array (utilizamos RegExp en lugar de solo un espacio en caso de que haya un espacio adicional entre palabras, error muy común en los que acostumbramos a usar Discord en celular), de esta manera nos quedaría ["saludo", "Me", "llamo", Nakido]
 	*/
-	const args = message.content.slice(prefix.length).trim().split(/  +/g);
+	const args = message.content.slice(prefix.length).trim().split(/ +/g);
+	console.log(prefix.length);
+	console.log(message.content.slice(prefix.length).trim());
 
 	/*
 	- 'command' sería lo que usaremos luego para agregar comandos.
