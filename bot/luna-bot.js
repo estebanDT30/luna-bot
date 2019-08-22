@@ -104,7 +104,8 @@ client.on('message', message => {
 				}
 
 				if (command === "roll") {
-					var dies, faces = 0;
+					var dies = 0;
+					var faces = 0;
 					var test = "";
 
 					dies = Number(content.slice(0, 1).trim());
@@ -120,16 +121,16 @@ client.on('message', message => {
 							if (faces < 1) {
 								message.channel.send("Los dados deben tener al menos **una cara**.");
 							} else {
-								var mensaje = "**Resultado:** ";
+								var mensaje = "*R/* ";
 								var suma = 0;
-								var kitDies[0] = 0;
+								var kitDies = new Array;
 
-								for (var i = 0; i <= dies; i++) {
+								for (var i = 0; i < dies; i++) {
 									kitDies[i] = getRndInt(1, faces);
 								}
 
 								for (var x = 0; x < kitDies.length; x++) {
-									if (x === kitDies.length) {
+									if (x === kitDies.length - 1) {
 										mensaje = mensaje + kitDies[x];
 									} else {
 										mensaje = mensaje + kitDies[x] + " + ";
@@ -138,7 +139,7 @@ client.on('message', message => {
 									suma = suma + Number(kitDies[x]);
 								}
 
-								mensaje = mensaje + " = " + suma;
+								mensaje = mensaje + " = " + "**" + suma + "**";
 
 								message.channel.send(mensaje);
 							}
