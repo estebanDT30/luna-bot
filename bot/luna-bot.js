@@ -104,23 +104,43 @@ client.on('message', message => {
 				}
 
 				if (command === "roll") {
-					var quantity, dices = 0;
+					var dies, faces = 0;
 					var test = "";
 
-					quantity = Number(content.slice(0, 1).trim());
+					dies = Number(content.slice(0, 1).trim());
 					test = content.slice(1, 2).trim();
-					dices = Number(content.slice(2, 3).trim());
+					faces = Number(content.slice(2, 3).trim());
 
 					if (test !== "d") {
 						message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
 					} else {
-						if (quantity < 1) {
+						if (dies < 1) {
 							message.channel.send("Debes usar al menos **un dado**.");
 						} else {
-							if (dices < 1) {
+							if (faces < 1) {
 								message.channel.send("Los dados deben tener al menos **una cara**.");
 							} else {
-								message.channel.send("Formato **válido**.");
+								var mensaje = "**Resultado:** ";
+								var suma = 0;
+								var kitDies[0] = 0;
+
+								for (var i = 0; i <= dies; i++) {
+									kitDies[i] = getRndInt(1, faces);
+								}
+
+								for (var x = 0; x < kitDies.length; x++) {
+									if (x === kitDies.length) {
+										mensaje = mensaje + kitDies[x];
+									} else {
+										mensaje = mensaje + kitDies[x] + " + ";
+									}
+
+									suma = suma + Number(kitDies[x]);
+								}
+
+								mensaje = mensaje + " = " + suma;
+
+								message.channel.send(mensaje);
 							}
 						}
 					}
