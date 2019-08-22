@@ -21,7 +21,7 @@ client.on("ready", () => {
 });
 
 //Bot listo.
-client.on('message', message => { 
+client.on('message', message => {
 	/*
 	Supongamos que tenemos el siguiente comando: "/saludo Me llamo Nakido".
 
