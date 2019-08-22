@@ -104,49 +104,53 @@ client.on('message', message => {
 				}
 
 				if (command === "roll") {
-					var dies = 0;
-					var faces = 0;
-					var test = "";
-
-					dies = Number(content.slice(0, 1).trim());
-					test = content.slice(1, 2).trim();
-					faces = Number(content.slice(2, 3).trim());
-
-					if (test !== "d") {
-						message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
+					if (content === "") {
+						message.channel.send("Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras.");
 					} else {
-						if (dies < 1) {
-							message.channel.send("Debes usar al menos **un dado**.");
+						var dies = 0;
+						var faces = 0;
+						var test = "";
+
+						dies = Number(content.slice(0, 1).trim());
+						test = content.slice(1, 2).trim();
+						faces = Number(content.slice(2, 3).trim());
+
+						if (test !== "d") {
+							message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
 						} else {
-							if (faces < 1) {
-								message.channel.send("Los dados deben tener al menos **una cara**.");
+							if (dies < 1) {
+								message.channel.send("Debes usar al menos **un dado**.");
 							} else {
-								var mensaje = "*R/* ";
-								var suma = 0;
-								var kitDies = new Array;
+								if (faces < 1) {
+									message.channel.send("Los dados deben tener al menos **una cara**.");
+								} else {
+									var mensaje = "*R/* ";
+									var suma = 0;
+									var kitDies = new Array;
 
-								for (var i = 0; i < dies; i++) {
-									kitDies[i] = getRndInt(1, faces);
-								}
-
-								for (var x = 0; x < kitDies.length; x++) {
-									if (x === kitDies.length - 1) {
-										mensaje = mensaje + kitDies[x];
-									} else {
-										mensaje = mensaje + kitDies[x] + " + ";
+									for (var i = 0; i < dies; i++) {
+										kitDies[i] = getRndInt(1, faces);
 									}
 
-									suma = suma + Number(kitDies[x]);
+									for (var x = 0; x < kitDies.length; x++) {
+										if (x === kitDies.length - 1) {
+											mensaje = mensaje + kitDies[x];
+										} else {
+											mensaje = mensaje + kitDies[x] + " + ";
+										}
+
+										suma = suma + Number(kitDies[x]);
+									}
+
+									mensaje = mensaje + " = " + "**" + suma + "**";
+
+									message.channel.send(mensaje);
 								}
-
-								mensaje = mensaje + " = " + "**" + suma + "**";
-
-								message.channel.send(mensaje);
 							}
 						}
-					}
 
-					//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
+						//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
+					}
 				}
 
 				if (command === "ping") {
@@ -154,8 +158,13 @@ client.on('message', message => {
 				}
 
 				if (command === "say") {
-					console.log(args + "\n" + content);
-					message.channel.send(content);
+					//console.log(args + "\n" + content);
+					if (content === "") {
+						message.channel.send("Se debe especificar el contenido del mensaje.");
+					}
+					else {
+						message.channel.send(content);
+					}
 				}
 
 				if (command === "nick") {
