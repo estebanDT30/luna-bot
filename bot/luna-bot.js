@@ -110,6 +110,8 @@ client.on('message', message => {
 
 				if (command === "roll") {
 					var quantity, dices = 0;
+
+					quantity = Number(content.slice(0, 1));
 					console.log(args + "\n" + content);
 				}
 
