@@ -10,11 +10,11 @@ const client = new Discord.Client(); //Se crea una sesión.
 
 //Generar un número al azar.
 function getRndInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1) ) + min;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 //Arranque de bot.
-client.on("ready", () => { 
+client.on("ready", () => {
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
 	console.log("Conectado como " + client.user.tag); //Se reporta en consola el acceso.
@@ -22,6 +22,7 @@ client.on("ready", () => {
 
 //Bot listo.
 client.on('message', message => {
+	//Se verifica que exista el prefijo completo en el mensaje.
 	const supposedPrefix = message.content.slice(0, prefix.length).trim();
 
 	/*
@@ -32,20 +33,20 @@ client.on('message', message => {
 		- 'trim()' elimina todos los espacios adicionales que puedan haber antes y después del mensaje.
 		- 'split(/ +/g)' separaría el mensaje por sus espacios dejando solo un array (utilizamos RegExp en lugar de solo un espacio en caso de que haya un espacio adicional entre palabras, error muy común en los que acostumbramos a usar Discord en celular), de esta manera nos quedaría ["saludo", "Me", "llamo", Nakido]
 	*/
-	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 
+	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	/*
 	- 'command' sería lo que usaremos luego para agregar comandos.
 		- 'args.shift()' separaría el comando del resto del mensaje ('shift()' remueve el primer objeto de un array), de esta manera 'args' solo quedaría como el resto del contenido del mensaje (["Me", "llamo", Nakido]) y lo podremos utilizar para definir parámetros adicionales en nuestros comandos.
 		- 'toLowerCase()' haría que todo el comando estuviera en minúsculas, así en caso de que nos equivoquemos escribiendo el comando y pongamos algo como /Saludo, funcionaría igual.
 	*/
-	const command = args.shift().toLowerCase();
 
+	const command = args.shift().toLowerCase();
 	/*
 	- 'content' sería similar a 'args', solo que en lugar de tener un array, sería un string.
 		- 'join(" ")' es la función que se encarga de unir todos los elementos del array con espacios en un string.
-	
 	*/
+
 	const content = args.join(" ");
 
 	/*
@@ -70,8 +71,7 @@ client.on('message', message => {
 
 	if (message.author.bot) {
 		return ;
-	}
-	else {
+	} else {
 		if (supposedPrefix === prefix) {
 			/*
 			Para verificar si un comando tiene argumentos.
@@ -79,16 +79,13 @@ client.on('message', message => {
 				return message.channel.send("Introduzca algunos parámetros");
 			}
 			*/
-		
 			if (command !== "") {
 				if (command === "help") {
 					console.log(args + "\n" + content);
+
 					if (content === "") {
 						message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```");
-					}
-					else {
-						
-					}
+					} else {}
 				}
 
 				if (command === "flip") {
@@ -97,12 +94,10 @@ client.on('message', message => {
 
 					if (randomNumber === 1) {
 						message.channel.send("Ha salido **cara**.");
-					}
-					else {
+					} else {
 						if (randomNumber === 2) {
 							message.channel.send("Ha salido **escudo**.");
-						}
-						else {
+						} else {
 							message.channel.send("**ERROR:** Contactar administrador.");
 						}
 					}
@@ -110,9 +105,27 @@ client.on('message', message => {
 
 				if (command === "roll") {
 					var quantity, dices = 0;
+					var test = "";
 
-					quantity = Number(content.slice(0, 1));
-					console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
+					quantity = Number(content.slice(0, 1).trim());
+					test = content.slice(1, 2).trim();
+					dices = Number(content.slice(2, 3).trim());
+
+					if (test !== "d") {
+						message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
+					} else {
+						if (quantity < 1) {
+							message.channel.send("Debes usar al menos **un dado**.");
+						} else {
+							if (dices < 1) {
+								message.channel.send("Los dados deben tener al menos **una cara**.");
+							} else {
+								message.channel.send("Formato **válido**.");
+							}
+						}
+					}
+
+					//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
 				}
 
 				if (command === "ping") {
@@ -131,19 +144,18 @@ client.on('message', message => {
 				if (command === "kill") {
 					client.destroy();
 				}
-			}
-			else {
+			} else {
 				message.channel.send("El prefijo es: `" + prefix + "`.");
 			}
-		}
-		else {
+		} else {
 			return ;
 		}
 	}
 });
 
-//Debugear errores.
+//Depurar errores.
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 
+//Conectar a bot.
 client.login(token);
