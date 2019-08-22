@@ -106,7 +106,7 @@ client.on('message', message => {
 			}
 
 			if (command === "roll") {
-				var quantity = 0, dices = 0;
+				var quantity, dices = 0;
 				console.log(args + "\n" + content);
 			}
 
