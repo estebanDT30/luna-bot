@@ -112,7 +112,7 @@ client.on('message', message => {
 					var quantity, dices = 0;
 
 					quantity = Number(content.slice(0, 1));
-					console.log(args + "\n" + content);
+					console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
 				}
 
 				if (command === "ping") {
