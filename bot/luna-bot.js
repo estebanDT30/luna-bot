@@ -107,7 +107,7 @@ client.on('message', message => {
 
 			if (command === "roll") {
 				var quantity = 0, dices = 0;
-				console.log("Cantidad: " + quantity + "\n" + "Lados: " +  dices);
+				console.log(args + "\n" + content);
 			}
 
 			if (command === "ping") {
