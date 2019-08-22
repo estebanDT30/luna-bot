@@ -22,6 +22,8 @@ client.on("ready", () => {
 
 //Bot listo.
 client.on('message', message => {
+	const messageSupposedPrefix = message.content.slice(0, prefix.length).trim();
+
 	/*
 	Supongamos que tenemos el siguiente comando: "/saludo Me llamo Nakido".
 
@@ -77,8 +79,8 @@ client.on('message', message => {
 		}
 		*/
 	
-			console.log(prefix.length);
-			console.log(message.content.slice(prefix.length).trim());
+			console.log(messageSupposedPrefix);
+			console.log(command);
 	
 		if (command !== "") {
 			if (command === "help") {
