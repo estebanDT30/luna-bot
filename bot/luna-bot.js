@@ -1,5 +1,6 @@
 //Usar las variables de entorno.
 require('dotenv').config();
+require('newrelic');
 
 const token = process.env.DISCORD_TOKEN;
 const prefix = process.env.DISCORD_PREFIX;
