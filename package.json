@@ -1,22 +1,23 @@
 {
 	"engines": {
-		"node": "10.16.2",
-		"npm": "6.9.0"
+		"node": "12.11.1",
+		"npm": "6.12.0"
 	},
 	"name": "luna-bot",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Another bot for Discord. Hoping to being able to do a lot of incredible functions. Housemade.",
 	"main": "bot/luna-bot.js",
 	"dependencies": {
 		"discord.js": "^11.5.1",
 		"discord.js-commando": "^0.10.0",
-		"dotenv": "^8.0.0",
+		"dotenv": "^8.1.0",
+		"express": "4.17.1",
 		"mysql": "2.17.1"
 	},
 	"devDependencies": {},
 	"scripts": {
-		"run:": "node bot/luna-bot.js",
-		"start": "node bot/luna-bot.js",
+		"run": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 bot/luna-bot.js",
+		"start": "node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
