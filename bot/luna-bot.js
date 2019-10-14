@@ -147,7 +147,7 @@ client.on('message', message => {
 								}
 							}
 						}
-						console.log(test2);
+						console.log(test2[0]);
 						//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
 					}
 				}
