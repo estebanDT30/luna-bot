@@ -115,7 +115,7 @@ client.on('message', message => {
 						test = content.slice(1, 2).trim();
 						faces = Number(content.slice(2, 3).trim());
 
-						if (test !== "d" || test !== "D") {
+						if (test.toLowerCase() !== "d") {
 							message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
 						} else {
 							if (dies < 1) {
