@@ -107,13 +107,12 @@ client.on('message', message => {
 					if (content === "") {
 						message.channel.send("Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras.");
 					} else {
-						var dies = 0;
-						var faces = 0;
-						var test = "";
+						var test2 = /(?!.*\s)([dD])(?!.*\s)/.exec(content);
+						var quantity2 = content.split("d");
 
-						dies = Number(content.slice(0, 1).trim());
-						test = content.slice(1, 2).trim();
-						faces = Number(content.slice(2, 3).trim());
+						var dies = Number(content.slice(0, 1).trim());
+						var test = content.slice(1, 2).trim();
+						var faces = Number(content.slice(2, 3).trim());
 
 						if (test.toLowerCase() !== "d") {
 							message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
@@ -148,9 +147,8 @@ client.on('message', message => {
 								}
 							}
 						}
-
+						console.log(test2);
 						//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
-						console.log(content);
 					}
 				}
 
