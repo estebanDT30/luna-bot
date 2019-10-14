@@ -153,8 +153,8 @@ client.on('message', message => {
 					}
 				}
 
-				if (command === "ping") {
-					message.channel.send("Pong.");
+				if (command === "repo") {
+					message.channel.send("**https://github.com/estebanDT30/luna-bot**");
 				}
 
 				if (command === "say") {
