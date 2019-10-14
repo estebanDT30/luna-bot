@@ -84,7 +84,7 @@ client.on('message', message => {
 					//console.log(args + "\n" + content);
 
 					if (content === "") {
-						message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\nping\nsay\n```");
+						message.channel.send("Lista de Comandos:\n```\nhelp\nflip\nroll\repo\nsay\n```");
 					} else {}
 				}
 
