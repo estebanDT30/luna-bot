@@ -122,7 +122,7 @@ client.on('message', message => {
 								} else {
 									var mensaje = "*R/* ";
 									var suma = 0;
-									var kitDies = new Array;
+									var kitDies = [];
 
 									for (var i = 0; i < dies; i++) {
 										kitDies[i] = getRndInt(1, faces);
