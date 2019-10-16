@@ -3,7 +3,7 @@ var app = express();
 
 //SET PORT
 var port = process.env.PORT || 8080;
-app.use(express.static(__dirname + "/web"));
+app.use(express.static(__dirname + "/docs"));
 
 //ROUTES
 app.get("/", function(req, res) {
