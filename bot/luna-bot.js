@@ -1,8 +1,10 @@
 //Usar las variables de entorno.
 require('dotenv').config();
 
+//Constantes de entorno.
 const token = process.env.DISCORD_TOKEN;
 const prefix = process.env.DISCORD_PREFIX;
+const ownerID = process.env.DISCORD_DEV_ID;
 
 //Constantes de desarrollo.
 const Discord = require("discord.js"); //Importación de "discord.js".
@@ -11,6 +13,21 @@ const client = new Discord.Client(); //Se crea una sesión.
 //Generar un número al azar.
 function getRndInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//Obtener el objeto "Usuario", es decir, yo, el dueño del bot.
+function getBotOwner(id) {
+	if (id !== "") {
+		var user = client.fetchUser(id);
+	} else {
+		console.log('ERROR en la función "getBotOwner": No se ha definido el ID del Usuario a buscar.');
+	}
+
+	if (user != null) {
+		return user;
+	} else {
+		console.log('ERROR en la función "getBotOwner": No se ha encontrado ningún usuario en base al ID especificado.');
+	}
 }
 
 //Arranque de bot.
@@ -70,7 +87,7 @@ client.on('message', message => {
 	*/
 
 	if (message.author.bot) {
-		return ;
+		return;
 	} else {
 		if (supposedPrefix === prefix) {
 			/*
@@ -84,8 +101,8 @@ client.on('message', message => {
 					//console.log(args + "\n" + content);
 
 					if (content === "") {
-						message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\nrepo\nsay```");
-					} else {}
+						message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\ninfo\nsay```");
+					} else { }
 				}
 
 				if (command === "flip") {
@@ -148,8 +165,21 @@ client.on('message', message => {
 					}
 				}
 
-				if (command === "repo") {
-					message.channel.send("**https://github.com/estebanDT30/luna-bot**");
+				if (command === "calc") {
+					message.send("*Esta función se encuentra en desarrollo.*");
+				}
+
+				if (command === "info") {
+					const embed = new Discord.RichEmbed();
+
+					embed.setTitle("luna-bot");
+					embed.setDescription("*Another bot for Discord. Hoping to being able to do a lot of incredible functions. Homemade. Hosted in Heroku.*");
+					embed.setURL("https://github.com/estebanDT30/luna-bot");
+					embed.setColor(10197915);
+					embed.setImage("https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna_cover.png");
+					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/40399bd91a226683ea59a064cc288b38.png", "https://github.com/estebanDT30");
+
+					message.channel.send(embed);
 				}
 
 				if (command === "say") {
@@ -173,7 +203,7 @@ client.on('message', message => {
 				message.channel.send("El prefijo es: `" + prefix + "`.");
 			}
 		} else {
-			return ;
+			return;
 		}
 	}
 });
