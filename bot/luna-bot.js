@@ -166,7 +166,7 @@ client.on('message', message => {
 				}
 
 				if (command === "calc") {
-					message.send("*Esta función se encuentra en desarrollo.*");
+					message.channel.send("*Esta función se encuentra en desarrollo.*");
 				}
 
 				if (command === "info") {
