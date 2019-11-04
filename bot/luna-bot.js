@@ -177,7 +177,7 @@ client.on('message', message => {
 					embed.setURL("https://github.com/estebanDT30/luna-bot");
 					embed.setColor(10197915);
 					embed.setImage("https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna_cover.png");
-					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/40399bd91a226683ea59a064cc288b38.png", "https://github.com/estebanDT30");
+					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg", "https://github.com/estebanDT30");
 
 					message.channel.send(embed);
 				}
