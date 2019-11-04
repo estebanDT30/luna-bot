@@ -30,8 +30,24 @@ function getBotOwner(id) {
 	}
 }
 
+//Función que, como indica, permite obtener un "User" a partir de una mención.
+function getUserFromMention(mention) {
+	if (!mention) return;
+
+	if (mention.startsWith('<@') && mention.endsWith('>')) {
+		mention = mention.slice(2, -1);
+
+		if (mention.startsWith('!')) {
+			mention = mention.slice(1);
+		}
+
+		return client.users.get(mention);
+	}
+}
+
 //Arranque de bot.
 client.on("ready", () => {
+	client.user.setStatus("online"); //Definir estado Online.
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
 	console.log("Conectado como " + client.user.tag); //Se reporta en consola el acceso.
@@ -200,10 +216,17 @@ client.on('message', message => {
 					client.destroy();
 				}
 			} else {
-				message.channel.send("El prefijo es: `" + prefix + "`.");
+				return;
 			}
 		} else {
-			return;
+			if (message.content !== "") {
+				const botID = client.user.id;
+				if (message.content === "<@" + botID + ">" || message.content === "<@!" + botID + ">") {
+					message.channel.send("**Mi prefijo en este servidor es:** " + "`" + prefix + "`");
+				}
+			} else {
+				return;
+			}
 		}
 	}
 });
