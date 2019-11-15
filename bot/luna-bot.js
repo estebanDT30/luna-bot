@@ -88,6 +88,10 @@ function getDate(date) {
 	if (month < 10) {
 		month = "0" + month;
 	}
+
+	const strDate = day + "/" + month + "/" + year;
+
+	return strDate;
 }
 
 //Arranque de bot.
@@ -97,7 +101,7 @@ client.on("ready", () => {
 	client.user.setStatus("online"); //Definir estado Online.
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
-	console.log('Conectado como "' + client.user.tag + '", a las ' + getTime(startDateTime) + "del " + getDate(startDateTime) + "."); //Se reporta en consola el acceso.
+	console.log('Conectado como "' + client.user.tag + '", a las ' + getTime(startDateTime) + " del " + getDate(startDateTime) + "."); //Se reporta en consola el acceso.
 });
 
 //Bot listo.
