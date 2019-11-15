@@ -45,12 +45,59 @@ function getUserFromMention(mention) {
 	}
 }
 
+function getTime(date) {
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+
+	if (hours >= 12) {
+		time = "PM";
+	} else {
+		time = "AM";
+	}
+
+	hours = hours % 12;
+
+	if (hours) {
+		hours = hours;
+	} else {
+		hours = 12;
+	} //The hour '0' should be '12'.
+
+	if (hours < 10) {
+		hours = "0" + hours;
+	}
+	
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+
+	const strTime = hours + ':' + minutes + ' ' + time;
+	
+	return strTime;
+}
+
+function getDate(date) {
+	var day = date.getDate();
+	var month = date.getMonth() + 1; //'getMonth()' retorna los meses empezando por el '0'.
+	var year = date.getFullYear();
+
+	if (day < 10) {
+		day = "0" + day;
+	}
+
+	if (month < 10) {
+		month = "0" + month;
+	}
+}
+
 //Arranque de bot.
 client.on("ready", () => {
+	const startDateTime = client.readyAt;
+
 	client.user.setStatus("online"); //Definir estado Online.
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
-	console.log("Conectado como " + client.user.tag); //Se reporta en consola el acceso.
+	console.log('Conectado como "' + client.user.tag + '", a las ' + getTime(startDateTime) + "del " + getDate(startDateTime) + "."); //Se reporta en consola el acceso.
 });
 
 //Bot listo.
