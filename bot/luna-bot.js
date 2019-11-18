@@ -10,26 +10,6 @@ const ownerID = process.env.DISCORD_DEV_ID;
 const Discord = require("discord.js"); //Importación de "discord.js".
 const client = new Discord.Client(); //Se crea una sesión.
 
-//Generar un número al azar.
-function getRndInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-//Obtener el objeto "Usuario", es decir, yo, el dueño del bot.
-function getBotOwner(id) {
-	if (id !== "") {
-		var user = client.fetchUser(id);
-	} else {
-		console.log('ERROR en la función "getBotOwner": No se ha definido el ID del Usuario a buscar.');
-	}
-
-	if (user != null) {
-		return user;
-	} else {
-		console.log('ERROR en la función "getBotOwner": No se ha encontrado ningún usuario en base al ID especificado.');
-	}
-}
-
 //Función que, como indica, permite obtener un "User" a partir de una mención.
 function getUserFromMention(mention) {
 	if (!mention) return;
@@ -66,13 +46,13 @@ function getTime(date) {
 	if (hours < 10) {
 		hours = "0" + hours;
 	}
-	
+
 	if (minutes < 10) {
 		minutes = "0" + minutes;
 	}
 
 	const strTime = hours + ':' + minutes + ' ' + time;
-	
+
 	return strTime;
 }
 
@@ -106,52 +86,18 @@ client.on("ready", () => {
 
 //Bot listo.
 client.on('message', message => {
+	//Se inicializa FunctionHandler.
+	const functions = require("./function-handler.js");
+	const FunctionsKit = new functions(client);
+
 	//Se verifica que exista el prefijo completo en el mensaje.
 	const supposedPrefix = message.content.slice(0, prefix.length).trim();
 
-	/*
-	Supongamos que tenemos el siguiente comando: "/saludo Me llamo Nakido".
-
-	- En la primera variable (args), obviamente lo primero que hacemos es tomar el contenido del mensaje.
-		- Con 'slice()' estamos cortando del mensaje nuestro prefijo, si nuestro prefijo es "/", un prefijo de solo un caracter, 'prefix.length' solo sería 1, por lo tanto el comando pasaría a ser solo "saludo".
-		- 'trim()' elimina todos los espacios adicionales que puedan haber antes y después del mensaje.
-		- 'split(/ +/g)' separaría el mensaje por sus espacios dejando solo un array (utilizamos RegExp en lugar de solo un espacio en caso de que haya un espacio adicional entre palabras, error muy común en los que acostumbramos a usar Discord en celular), de esta manera nos quedaría ["saludo", "Me", "llamo", Nakido]
-	*/
-
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
-	/*
-	- 'command' sería lo que usaremos luego para agregar comandos.
-		- 'args.shift()' separaría el comando del resto del mensaje ('shift()' remueve el primer objeto de un array), de esta manera 'args' solo quedaría como el resto del contenido del mensaje (["Me", "llamo", Nakido]) y lo podremos utilizar para definir parámetros adicionales en nuestros comandos.
-		- 'toLowerCase()' haría que todo el comando estuviera en minúsculas, así en caso de que nos equivoquemos escribiendo el comando y pongamos algo como /Saludo, funcionaría igual.
-	*/
 
 	const command = args.shift().toLowerCase();
-	/*
-	- 'content' sería similar a 'args', solo que en lugar de tener un array, sería un string.
-		- 'join(" ")' es la función que se encarga de unir todos los elementos del array con espacios en un string.
-	*/
 
 	const content = args.join(" ");
-
-	/*
-	Ahora intentemos algo más complicado.
-
-	if (command === "presentacion") {
-		const nombre = args[0];
-		const edad = args[1];
-		const pais = args[2];
-		message.channel.send("Hola, mi nombre es " + nombre + ", tengo " + edad + " años y actualmente vivo en " + pais);
-	}
-
-	// Desestructuración de arrays en ES6
-	if (command === "presentacion") {
-		const [nombre, edad, pais] = args;
-			message.channel.send("Hola, mi nombre es " + nombre + ", tengo " + edad + " años y actualmente vivo en " + pais);
-	}
-
-	Si utilizamos el comando de la siguiente manera: /presentacion Daniel 22 Venezuela, el bot enviaría "Hola, mi nombre es Daniel, tengo 22 años y actualmente vivo en Venezuela".
-	Bastante útil, pero ahora te toca a ti crear tus propios comandos.
-	*/
 
 	if (message.author.bot) {
 		return;
@@ -174,7 +120,7 @@ client.on('message', message => {
 
 				if (command === "flip") {
 					var randomNumber = 0;
-					randomNumber = getRndInt(1, 2);
+					randomNumber = FunctionsKit.getRandomInt(1, 2);
 
 					if (randomNumber === 1) {
 						message.channel.send("Ha salido **cara**.");
@@ -209,7 +155,7 @@ client.on('message', message => {
 									var kitDies = [];
 
 									for (var i = 0; i < dies; i++) {
-										kitDies[i] = getRndInt(1, faces);
+										kitDies[i] = FunctionsKit.getRandomInt(1, faces);
 									}
 
 									for (var x = 0; x < kitDies.length; x++) {
@@ -271,6 +217,7 @@ client.on('message', message => {
 		} else {
 			if (message.content !== "") {
 				const botID = client.user.id;
+
 				if (message.content === "<@" + botID + ">" || message.content === "<@!" + botID + ">") {
 					message.channel.send("**Mi prefijo en este servidor es:** " + "`" + prefix + "`");
 				}
@@ -280,10 +227,6 @@ client.on('message', message => {
 		}
 	}
 });
-
-//Depurar errores.
-client.on("error", (e) => console.error(e));
-client.on("warn", (e) => console.warn(e));
 
 //Conectar a bot.
 client.login(token);
