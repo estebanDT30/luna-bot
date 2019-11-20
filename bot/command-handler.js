@@ -34,4 +34,4 @@ module.exports = class CommandHandler {
 	say() {
 		const comm = require("./commands/say.js");
 	}
-}
+};

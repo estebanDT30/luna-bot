@@ -33,4 +33,4 @@ module.exports = class FunctionHandler {
 
 		return result;
 	}
-}
+};
