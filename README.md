@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna_cover.png" alt="Luna" />
+	<img src="https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg" alt="Luna" />
 </p>
 
 # luna-bot
