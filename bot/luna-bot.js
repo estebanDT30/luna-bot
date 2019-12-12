@@ -74,6 +74,17 @@ function getDate(date) {
 	return strDate;
 }
 
+function reportCatchedError(error) {
+	const embed = new Discord.RichEmbed();
+
+	embed.setColor(10197915);
+	embed.setTitle("<:evAnimePlsNot:654768549575000104>");
+	embed.setDescription("```js\n" + error + "\n```");
+	embed.setFooter("Este es un error. Por favor, ten paciencia. El desarrollador se hará cargo, eventualmente.");
+
+	return (embed);
+}
+
 //Arranque de bot.
 client.on("ready", () => {
 	const startDateTime = client.readyAt;
@@ -201,6 +212,9 @@ client.on('message', message => {
 						message.channel.send("Se debe especificar el contenido del mensaje.");
 					} else {
 						message.channel.send(content);
+						if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
+							message.delete()
+						}
 					}
 				}
 
@@ -208,7 +222,43 @@ client.on('message', message => {
 					message.guild.members.get(client.user.id).setNickname("Luna");
 				}
 
+				if (command === "eval") {
+					if (message.author.id === ownerID) {
+						if (args != "") {
+							try {
+								const code = args.join(' ');
+								const response = eval(code);
+
+								const embed = new Discord.RichEmbed();
+
+								embed.setColor(10197915);
+								embed.setTitle("<:evAnimeSip:654767584096419841>");
+								embed.addField("INPUT", "```js\n" + code + "\n```");
+								embed.addField("OUTPUT", "```js\n" + response + "\n```");
+
+								message.channel.send(embed);
+							} catch (err) {
+								message.channel.send(reportCatchedError(err));
+								console.error(err);
+							}
+						} else {
+							message.channel.send("Se debe especificar el código a ejecutar.");
+						}
+					} else {
+						try {
+							message.channel.send("Como si fuera a dejar que uses un `eval()`. <:evAnimeShrug:654768549725863936>");
+
+						} catch (err) {
+							message.channel.send(reportCatchedError(err));
+							console.error(err);
+						}
+					}
+				}
+
 				if (command === "kill") {
+					if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
+						message.delete()
+					}
 					client.destroy();
 				}
 			} else {
@@ -226,6 +276,10 @@ client.on('message', message => {
 			}
 		}
 	}
+});
+
+client.on("disconnect", () => {
+	client.user.setStatus("offline");
 });
 
 //Conectar a bot.
