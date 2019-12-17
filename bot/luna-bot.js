@@ -213,7 +213,7 @@ client.on('message', message => {
 					} else {
 						message.channel.send(content);
 						if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
-							message.delete()
+							message.delete();
 						}
 					}
 				}
@@ -227,7 +227,13 @@ client.on('message', message => {
 						if (args != "") {
 							try {
 								const code = args.join(' ');
-								const response = eval(code);
+								let response = eval(code);
+
+								if (typeof response !== "string") {
+									response = require("util").inspect(response, {
+										depth: 0
+									});
+								}
 
 								const embed = new Discord.RichEmbed();
 
@@ -257,7 +263,7 @@ client.on('message', message => {
 
 				if (command === "kill") {
 					if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
-						message.delete()
+						message.delete();
 					}
 					client.destroy();
 				}
