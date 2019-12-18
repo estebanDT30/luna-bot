@@ -196,12 +196,14 @@ client.on('message', message => {
 				if (command === "info") {
 					const embed = new Discord.RichEmbed();
 
-					embed.setTitle("luna-bot");
+					embed.setTitle("Luna");
 					embed.setDescription("*Another bot for Discord. Hoping to being able to do a lot of incredible functions. Homemade. Hosted in Heroku.*");
-					embed.setURL("https://github.com/estebanDT30/luna-bot");
+					//embed.setURL("https://github.com/estebanDT30/luna-bot");
 					embed.setColor(10197915);
 					embed.setImage("https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg");
-					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg", "https://github.com/estebanDT30");
+					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg"/*, "https://github.com/estebanDT30"*/);
+					embed.addField("Directorio en GitHub", "https://github.com/estebanDT30/luna-bot");
+					embed.addField("Perfil del Desarrollador en GitHub", "https://github.com/estebanDT30");
 
 					message.channel.send(embed);
 				}
@@ -229,9 +231,9 @@ client.on('message', message => {
 								const code = args.join(' ');
 								let response = eval(code);
 
-								if (typeof response !== "string") {
+								if (typeof(response) !== "string") {
 									response = require("util").inspect(response, {
-										depth: 0
+										depth: null,
 									});
 								}
 
