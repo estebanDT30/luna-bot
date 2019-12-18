@@ -197,12 +197,12 @@ client.on('message', message => {
 					const embed = new Discord.RichEmbed();
 
 					embed.setTitle("Luna");
-					embed.setDescription("*Another bot for Discord. Hoping to being able to do a lot of incredible functions. Homemade. Hosted in Heroku.*");
+					embed.setDescription("*Un bot para Discord.*\n*Espero que sea capaz de hacer un montón de cosas que otros bots hacen.*");
 					//embed.setURL("https://github.com/estebanDT30/luna-bot");
 					embed.setColor(10197915);
 					embed.setImage("https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg");
 					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg"/*, "https://github.com/estebanDT30"*/);
-					embed.addField("Directorio en GitHub", "https://github.com/estebanDT30/luna-bot");
+					embed.addField("Repositorio en GitHub", "https://github.com/estebanDT30/luna-bot");
 					embed.addField("Perfil del Desarrollador en GitHub", "https://github.com/estebanDT30");
 
 					message.channel.send(embed);
