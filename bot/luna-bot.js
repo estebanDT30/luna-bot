@@ -233,7 +233,7 @@ client.on('message', message => {
 
 								if (typeof(response) !== "string") {
 									response = require("util").inspect(response, {
-										depth: null,
+										depth: 0,
 									});
 								}
 
