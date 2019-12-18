@@ -3,11 +3,13 @@
 </p>
 
 # Luna
+
 ### https://estebandt30.github.io/luna-bot/
 
 ### Creado por: estebanDT30
+
 ### También conocido como: GameBoy0665
 
 Un bot para Discord. Espero que sea capaz de hacer un montón de cosas que otros bots hacen.
 
-*Por ahora, un pasatiempo. Un proyecto personal. Lo siento, no habrán avances frecuentes.*
+_Por ahora, un pasatiempo. Un proyecto personal. Lo siento, no habrán avances frecuentes._

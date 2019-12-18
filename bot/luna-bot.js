@@ -1,5 +1,5 @@
 //Usar las variables de entorno.
-require('dotenv').config();
+require("dotenv").config();
 
 //Constantes de entorno.
 const token = process.env.DISCORD_TOKEN;
@@ -14,10 +14,10 @@ const client = new Discord.Client(); //Se crea una sesión.
 function getUserFromMention(mention) {
 	if (!mention) return;
 
-	if (mention.startsWith('<@') && mention.endsWith('>')) {
+	if (mention.startsWith("<@") && mention.endsWith(">")) {
 		mention = mention.slice(2, -1);
 
-		if (mention.startsWith('!')) {
+		if (mention.startsWith("!")) {
 			mention = mention.slice(1);
 		}
 
@@ -51,7 +51,7 @@ function getTime(date) {
 		minutes = "0" + minutes;
 	}
 
-	const strTime = hours + ':' + minutes + ' ' + time;
+	const strTime = hours + ":" + minutes + " " + time;
 
 	return strTime;
 }
@@ -82,7 +82,7 @@ function reportCatchedError(error) {
 	embed.setDescription("```js\n" + error + "\n```");
 	embed.setFooter("Este es un error. Por favor, ten paciencia. El desarrollador se hará cargo, eventualmente.");
 
-	return (embed);
+	return embed;
 }
 
 //Arranque de bot.
@@ -92,11 +92,19 @@ client.on("ready", () => {
 	client.user.setStatus("online"); //Definir estado Online.
 	client.user.setUsername("LunaBot"); //Definir nombre de usuario, por si acaso.
 	//client.user.setNickname("Luna");
-	console.log('Conectado como "' + client.user.tag + '", a las ' + getTime(startDateTime) + " del " + getDate(startDateTime) + "."); //Se reporta en consola el acceso.
+	console.log(
+		'Conectado como "' +
+			client.user.tag +
+			'", a las ' +
+			getTime(startDateTime) +
+			" del " +
+			getDate(startDateTime) +
+			"."
+	); //Se reporta en consola el acceso.
 });
 
 //Bot listo.
-client.on('message', message => {
+client.on("message", message => {
 	//Se inicializa FunctionHandler.
 	const functions = require("./function-handler.js");
 	const FunctionsKit = new functions(client);
@@ -104,7 +112,10 @@ client.on('message', message => {
 	//Se verifica que exista el prefijo completo en el mensaje.
 	const supposedPrefix = message.content.slice(0, prefix.length).trim();
 
-	const args = message.content.slice(prefix.length).trim().split(/ +/g);
+	const args = message.content
+		.slice(prefix.length)
+		.trim()
+		.split(/ +/g);
 
 	const command = args.shift().toLowerCase();
 
@@ -126,7 +137,8 @@ client.on('message', message => {
 
 					if (content === "") {
 						message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\ninfo\nsay```");
-					} else {}
+					} else {
+					}
 				}
 
 				if (command === "flip") {
@@ -146,14 +158,18 @@ client.on('message', message => {
 
 				if (command === "roll") {
 					if (content === "") {
-						message.channel.send("Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras.");
+						message.channel.send(
+							"Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras."
+						);
 					} else {
 						var test = /(?!.*\s)([dD])(?!.*\s)/.exec(content);
 						var dies = content.split(test[0])[0];
 						var faces = content.split(test[0])[1];
 
 						if (test[0].toLowerCase() !== "d") {
-							message.channel.send("Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos.");
+							message.channel.send(
+								"Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos."
+							);
 						} else {
 							if (dies < 1) {
 								message.channel.send("Debes usar al menos **un dado**.");
@@ -197,11 +213,18 @@ client.on('message', message => {
 					const embed = new Discord.RichEmbed();
 
 					embed.setTitle("Luna");
-					embed.setDescription("*Un bot para Discord.*\n*Espero que sea capaz de hacer un montón de cosas que otros bots hacen.*");
+					embed.setDescription(
+						"*Un bot para Discord.*\n*Espero que sea capaz de hacer un montón de cosas que otros bots hacen.*"
+					);
 					//embed.setURL("https://github.com/estebanDT30/luna-bot");
 					embed.setColor(10197915);
-					embed.setImage("https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg");
-					embed.setAuthor("GameBoy0665", "https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg"/*, "https://github.com/estebanDT30"*/);
+					embed.setImage(
+						"https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg"
+					);
+					embed.setAuthor(
+						"GameBoy0665",
+						"https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg" /*, "https://github.com/estebanDT30"*/
+					);
 					embed.addField("Repositorio en GitHub", "https://github.com/estebanDT30/luna-bot");
 					embed.addField("Perfil del Desarrollador en GitHub", "https://github.com/estebanDT30");
 
@@ -214,7 +237,10 @@ client.on('message', message => {
 						message.channel.send("Se debe especificar el contenido del mensaje.");
 					} else {
 						message.channel.send(content);
-						if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
+						if (
+							message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
+							message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
+						) {
 							message.delete();
 						}
 					}
@@ -228,12 +254,12 @@ client.on('message', message => {
 					if (message.author.id === ownerID) {
 						if (args != "") {
 							try {
-								const code = args.join(' ');
+								const code = args.join(" ");
 								let response = eval(code);
 
-								if (typeof(response) !== "string") {
+								if (typeof response !== "string") {
 									response = require("util").inspect(response, {
-										depth: 0,
+										depth: 0
 									});
 								}
 
@@ -254,8 +280,9 @@ client.on('message', message => {
 						}
 					} else {
 						try {
-							message.channel.send("Como si fuera a dejar que uses un `eval()`. <:evAnimeShrug:654768549725863936>");
-
+							message.channel.send(
+								"Como si fuera a dejar que uses un `eval()`. <:evAnimeShrug:654768549725863936>"
+							);
 						} catch (err) {
 							message.channel.send(reportCatchedError(err));
 							console.error(err);
@@ -264,7 +291,10 @@ client.on('message', message => {
 				}
 
 				if (command === "kill") {
-					if (message.channel.permissionsFor(message.guild.me).has('ADMINISTRATOR') || message.channel.permissionsFor(message.guild.me).has('MANAGE_MESSAGES')) {
+					if (
+						message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
+						message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
+					) {
 						message.delete();
 					}
 					client.destroy();

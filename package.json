@@ -1,17 +1,17 @@
 {
 	"engines": {
-		"node": "^13.3.0",
-		"npm": "^6.13.4"
+		"node": "^13.x.x",
+		"npm": "^6.x.x"
 	},
 	"name": "luna-bot",
 	"version": "1.0.4",
 	"description": "Un bot para Discord. Espero que sea capaz de hacer un montón de cosas que otros bots hacen.",
 	"main": "bot/luna-bot.js",
 	"dependencies": {
-		"discord.js": "^11.5.1",
-		"dotenv": "^8.2.0",
-		"express": "^4.17.1",
-		"mysql": "^2.17.1"
+		"discord.js": "^11.x.x",
+		"dotenv": "^8.x.x",
+		"express": "^4.x.x",
+		"mysql": "^2.x.x"
 	},
 	"devDependencies": {},
 	"scripts": {
