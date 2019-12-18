@@ -1,11 +1,11 @@
 {
 	"engines": {
-		"node": "^12.13.0",
-		"npm": "^6.13.3"
+		"node": "^13.3.0",
+		"npm": "^6.13.4"
 	},
 	"name": "luna-bot",
-	"version": "1.1.0",
-	"description": "Another bot for Discord. Hoping to being able to do a lot of incredible functions. Housemade.",
+	"version": "1.0.4",
+	"description": "Un bot para Discord. Espero que sea capaz de hacer un montón de cosas que otros bots hacen.",
 	"main": "bot/luna-bot.js",
 	"dependencies": {
 		"discord.js": "^11.5.1",
@@ -16,8 +16,7 @@
 	"devDependencies": {},
 	"scripts": {
 		"run": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 bot/luna-bot.js",
-		"start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 server.js"
 	},
 	"repository": {
 		"type": "git",
