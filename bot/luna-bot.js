@@ -291,13 +291,17 @@ client.on("message", message => {
 				}
 
 				if (command === "kill") {
-					if (
-						message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
-						message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
-					) {
-						message.delete();
+					if (message.author.id === ownerID) {
+						if (
+							message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
+							message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
+						) {
+							message.delete();
+						}
+						client.destroy();
+					} else {
+						message.channel.send("*Buen intento, colega. Lástima que **no eres mi dueño**.* <:evAnimeShrug:654768549725863936>");
 					}
-					client.destroy();
 				}
 			} else {
 				return;
