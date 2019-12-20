@@ -11,5 +11,5 @@ app.get("/", function(req, res) {
 });
 
 app.listen(port, function() {
-	console.log("Web App Running.");
+	console.log("Servidor web iniciado en el puerto " + port + ".");
 });
