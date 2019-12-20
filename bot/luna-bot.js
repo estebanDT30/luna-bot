@@ -300,7 +300,9 @@ client.on("message", message => {
 						}
 						client.destroy();
 					} else {
-						message.channel.send("*Buen intento, colega. Lástima que **no eres mi dueño**.* <:evAnimeShrug:654768549725863936>");
+						message.channel.send(
+							"*Buen intento, colega. Lástima que **no eres mi dueño**.* <:evAnimeShrug:654768549725863936>"
+						);
 					}
 				}
 			} else {
