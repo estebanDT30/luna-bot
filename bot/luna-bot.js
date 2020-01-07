@@ -26,8 +26,8 @@ function getUserFromMention(mention) {
 }
 
 function getTime(date) {
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
+	let hours = date.getHours();
+	let minutes = date.getMinutes();
 
 	if (hours >= 12) {
 		time = "PM";
@@ -57,9 +57,9 @@ function getTime(date) {
 }
 
 function getDate(date) {
-	var day = date.getDate();
-	var month = date.getMonth() + 1; //'getMonth()' retorna los meses empezando por el '0'.
-	var year = date.getFullYear();
+	let day = date.getDate();
+	let month = date.getMonth() + 1; //'getMonth()' retorna los meses empezando por el '0'.
+	let year = date.getFullYear();
 
 	if (day < 10) {
 		day = "0" + day;
@@ -135,125 +135,160 @@ client.on("message", message => {
 				if (command === "help") {
 					//console.log(args + "\n" + content);
 
-					if (content === "") {
-						message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\ninfo\nsay```");
-					} else {
+					try {
+						if (content === "") {
+							message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\ninfo\nsay```");
+						}
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 
 				if (command === "flip") {
-					var randomNumber = 0;
-					randomNumber = FunctionsKit.getRandomInt(1, 2);
+					try {
+						let randomNumber = 0;
+						randomNumber = FunctionsKit.getRandomInt(1, 2);
 
-					if (randomNumber === 1) {
-						message.channel.send("Ha salido **cara**.");
-					} else {
-						if (randomNumber === 2) {
-							message.channel.send("Ha salido **escudo**.");
+						if (randomNumber === 1) {
+							message.channel.send("Ha salido **cara**.");
 						} else {
-							message.channel.send("**ERROR:** Contactar administrador.");
+							if (randomNumber === 2) {
+								message.channel.send("Ha salido **escudo**.");
+							} else {
+								message.channel.send("**ERROR:** Contactar administrador.");
+							}
 						}
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 
 				if (command === "roll") {
-					if (content === "") {
-						message.channel.send(
-							"Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras."
-						);
-					} else {
-						var test = /(?!.*\s)([dD])(?!.*\s)/.exec(content);
-						var dies = content.split(test[0])[0];
-						var faces = content.split(test[0])[1];
-
-						if (test[0].toLowerCase() !== "d") {
+					try {
+						if (content === "") {
 							message.channel.send(
-								"Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos."
+								"Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras."
 							);
 						} else {
-							if (dies < 1) {
-								message.channel.send("Debes usar al menos **un dado**.");
+							let test = /(?!.*\s)([dD])(?!.*\s)/.exec(content);
+							let dies = content.split(test[0])[0];
+							let faces = content.split(test[0])[1];
+
+							if (test[0].toLowerCase() !== "d") {
+								message.channel.send(
+									"Se debe utilizar una ´d´ entre la cantidad de dados y las caras de los mismos."
+								);
 							} else {
-								if (faces < 1) {
-									message.channel.send("Los dados deben tener al menos **una cara**.");
+								if (dies < 1) {
+									message.channel.send("Debes usar al menos **un dado**.");
 								} else {
-									var mensaje = "*R/* ";
-									var suma = 0;
-									var kitDies = [];
+									if (faces < 1) {
+										message.channel.send("Los dados deben tener al menos **una cara**.");
+									} else {
+										let mensaje = "*R/* ";
+										let suma = 0;
+										let kitDies = [];
 
-									for (var i = 0; i < dies; i++) {
-										kitDies[i] = FunctionsKit.getRandomInt(1, faces);
-									}
-
-									for (var x = 0; x < kitDies.length; x++) {
-										if (x === kitDies.length - 1) {
-											mensaje = mensaje + kitDies[x];
-										} else {
-											mensaje = mensaje + kitDies[x] + " + ";
+										for (let i = 0; i < dies; i++) {
+											kitDies[i] = FunctionsKit.getRandomInt(1, faces);
 										}
 
-										suma = suma + Number(kitDies[x]);
+										for (let x = 0; x < kitDies.length; x++) {
+											if (x === kitDies.length - 1) {
+												mensaje = mensaje + kitDies[x];
+											} else {
+												mensaje = mensaje + kitDies[x] + " + ";
+											}
+
+											suma = suma + Number(kitDies[x]);
+										}
+
+										mensaje = mensaje + " = " + "**" + suma + "**";
+
+										message.channel.send(mensaje);
 									}
-
-									mensaje = mensaje + " = " + "**" + suma + "**";
-
-									message.channel.send(mensaje);
 								}
 							}
+							//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
 						}
-						//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 
 				if (command === "calc") {
-					message.channel.send("*Esta función se encuentra en desarrollo.*");
+					try {
+						message.channel.send("_Esta función se encuentra en desarrollo._");
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
+					}
 				}
 
 				if (command === "info") {
-					const embed = new Discord.RichEmbed();
+					try {
+						const embed = new Discord.RichEmbed();
 
-					embed.setTitle("Luna");
-					embed.setDescription(
-						"*Un bot para Discord.*\n*Espero que sea capaz de hacer un montón de cosas que otros bots hacen.*"
-					);
-					//embed.setURL("https://github.com/estebanDT30/luna-bot");
-					embed.setColor(10197915);
-					embed.setImage(
-						"https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg"
-					);
-					embed.setAuthor(
-						"GameBoy0665",
-						"https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg" /*, "https://github.com/estebanDT30"*/
-					);
-					embed.addField("Repositorio en GitHub", "https://github.com/estebanDT30/luna-bot");
-					embed.addField("Perfil del Desarrollador en GitHub", "https://github.com/estebanDT30");
+						embed.setTitle("Luna");
+						embed.setDescription(
+							"_Un bot para Discord._\n_Espero que sea capaz de hacer un montón de cosas que otros bots hacen._"
+						);
+						//embed.setURL("https://github.com/estebanDT30/luna-bot");
+						embed.setColor(10197915);
+						embed.setImage(
+							"https://raw.githubusercontent.com/estebanDT30/luna-bot/master/docs/assets/media/img/luna-bot_cover.jpg"
+						);
+						embed.setAuthor(
+							"GameBoy0665",
+							"https://cdn.discordapp.com/avatars/288032600705204225/5a2f0058bb867eeb8699e78911981a1c.jpg" /*, "https://github.com/estebanDT30"*/
+						);
+						embed.addField("Repositorio en GitHub", "https://github.com/estebanDT30/luna-bot");
+						embed.addField("Perfil del Desarrollador en GitHub", "https://github.com/estebanDT30");
 
-					message.channel.send(embed);
+						message.channel.send(embed);
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
+					}
 				}
 
 				if (command === "say") {
 					//console.log(args + "\n" + content);
-					if (content === "") {
-						message.channel.send("Se debe especificar el contenido del mensaje.");
-					} else {
-						message.channel.send(content);
-						if (
-							message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
-							message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
-						) {
-							message.delete();
+
+					try {
+						if (content === "") {
+							message.channel.send("Se debe especificar el contenido del mensaje.");
+						} else {
+							message.channel.send(content);
+							if (
+								message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
+								message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
+							) {
+								message.delete();
+							}
 						}
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 
 				if (command === "nick") {
-					message.guild.members.get(client.user.id).setNickname("Luna");
+					try {
+						message.guild.members.get(client.user.id).setNickname("Luna");
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
+					}
 				}
 
 				if (command === "eval") {
-					if (message.author.id === ownerID) {
-						if (args != "") {
-							try {
+					try {
+						if (message.author.id === ownerID) {
+							if (args != "") {
 								const code = args.join(" ");
 								let response = eval(code);
 
@@ -271,22 +306,15 @@ client.on("message", message => {
 								embed.addField("OUTPUT", "```js\n" + response + "\n```");
 
 								message.channel.send(embed);
-							} catch (err) {
-								message.channel.send(reportCatchedError(err));
-								console.error(err);
+							} else {
+								message.channel.send("Se debe especificar el código a ejecutar.");
 							}
 						} else {
-							message.channel.send("Se debe especificar el código a ejecutar.");
+							message.channel.send("_Va a ser que no._ <:evAnimeShrug:654768549725863936>");
 						}
-					} else {
-						try {
-							message.channel.send(
-								"Como si fuera a dejar que uses un `eval()`. <:evAnimeShrug:654768549725863936>"
-							);
-						} catch (err) {
-							message.channel.send(reportCatchedError(err));
-							console.error(err);
-						}
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 
@@ -307,32 +335,40 @@ client.on("message", message => {
 				}
 
 				if (command === "kill") {
-					if (message.author.id === ownerID) {
-						if (
-							message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
-							message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
-						) {
-							message.delete();
+					try {
+						if (message.author.id === ownerID) {
+							if (
+								message.channel.permissionsFor(message.guild.me).has("ADMINISTRATOR") ||
+								message.channel.permissionsFor(message.guild.me).has("MANAGE_MESSAGES")
+							) {
+								message.delete();
+							}
+							client.destroy();
+						} else {
+							message.channel.send("_Va a ser que no._ <:evAnimeShrug:654768549725863936>");
 						}
-						client.destroy();
-					} else {
-						message.channel.send(
-							"*Buen intento, colega. Lástima que **no eres mi dueño**.* <:evAnimeShrug:654768549725863936>"
-						);
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
 					}
 				}
 			} else {
 				return;
 			}
 		} else {
-			if (message.content !== "") {
-				const botID = client.user.id;
+			try {
+				if (message.content !== "") {
+					const botID = client.user.id;
 
-				if (message.content === "<@" + botID + ">" || message.content === "<@!" + botID + ">") {
-					message.channel.send("**Mi prefijo en este servidor es:** " + "`" + prefix + "`");
+					if (message.content === "<@" + botID + ">" || message.content === "<@!" + botID + ">") {
+						message.channel.send("**Mi prefijo en este servidor es:** " + "`" + prefix + "`");
+					}
+				} else {
+					return;
 				}
-			} else {
-				return;
+			} catch (err) {
+				message.channel.send(reportCatchedError(err));
+				console.error(err);
 			}
 		}
 	}
