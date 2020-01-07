@@ -290,6 +290,22 @@ client.on("message", message => {
 					}
 				}
 
+				if (command == "readyat") {
+					try {
+						const uptime = client.readyAt;
+						message.channel.send(
+							"El último reinicio del bot fue el **" +
+								getDate(uptime) +
+								"** a las **" +
+								getTime(uptime) +
+								"**, GMT -6. <:evAnimeSip:654767584096419841>"
+						);
+					} catch (err) {
+						message.channel.send(reportCatchedError(err));
+						console.error(err);
+					}
+				}
+
 				if (command === "kill") {
 					if (message.author.id === ownerID) {
 						if (
