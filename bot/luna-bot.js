@@ -318,16 +318,26 @@ client.on("message", message => {
 					}
 				}
 
-				if (command == "readyat") {
+				if (command === "stats") {
 					try {
 						const uptime = client.readyAt;
-						message.channel.send(
-							"El último reinicio del bot fue el **" +
-								getDate(uptime) +
-								"** a las **" +
-								getTime(uptime) +
-								"**, GMT -6. <:evAnimeSip:654767584096419841>"
+						const ping = Math.round(client.ping * 100) / 100;
+						const serverAmmount = client.guilds.size;
+						const userAmmount = client.users.size;
+
+						const embed = new Discord.RichEmbed();
+
+						embed.setColor(10197915);
+						embed.setTitle("<:evAnimeWhat:654768549641846824>");
+						embed.addField(
+							"Hora y fecha del último reinicio",
+							getDate(uptime) + ", " + getTime(uptime) + "\n _GMT-6_"
 						);
+						embed.addField("Ping", "**" + ping + "** ms", true);
+						embed.addField("Servidores", serverAmmount, true);
+						embed.addField("Usuarios", userAmmount, true);
+
+						message.channel.send(embed);
 					} catch (err) {
 						message.channel.send(reportCatchedError(err));
 						console.error(err);
