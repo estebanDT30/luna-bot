@@ -12,4 +12,4 @@
 
 Un bot para Discord. Espero que sea capaz de hacer un montón de cosas que otros bots hacen.
 
-_Por ahora, un pasatiempo. Un proyecto personal. Lo siento, no habrán avances frecuentes._
+_Por ahora, un pasatiempo. Un proyecto personal. Tal vez, un sentido de vida._
