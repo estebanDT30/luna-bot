@@ -172,9 +172,11 @@ client.on("message", message => {
 								"Se debe usar el formato `XdY`, donde X es la cantidad de dados a tirar, y Y su cantidad de caras."
 							);
 						} else {
-							let test = /(?!.*\s)([dD])(?!.*\s)/.exec(content);
-							let dies = content.split(test[0])[0];
-							let faces = content.split(test[0])[1];
+							const regex = /(?!.*\s)([dD])(?!.*\s)/g;
+
+							const test = regex.exec(content);
+							const dies = content.split(test[0])[0];
+							const faces = content.split(test[0])[1];
 
 							if (test[0].toLowerCase() !== "d") {
 								message.channel.send(
