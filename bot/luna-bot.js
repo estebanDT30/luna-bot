@@ -371,29 +371,31 @@ client.on("message", message => {
 								.get(`https://db.ygoprodeck.com/api/v5/cardinfo.php?fname=${term}`)
 								.then(x => {
 									if (x.body.length == 1) {
-										message.channel.send(
-											new Discord.Attachment(x.body[0].card_images[0].image_url)
-										);
+										const singleCardEmbed = new Discord.RichEmbed();
+
+										singleCardEmbed.setImage(x.body[0].card_images[0].image_url);
+
+										message.channel.send(singleCardEmbed);
 									} else if (x.body.length > 1) {
-										const embed = new Discord.RichEmbed();
+										const listEmbed = new Discord.RichEmbed();
 
-										embed.setColor(10197915);
-										embed.setTitle("Elige una carta");
+										listEmbed.setColor(10197915);
+										listEmbed.setTitle("Elige una carta");
 
-										let embedContent = "";
+										let listEmbedContent = "";
 
 										for (i = 0; i <= x.body.length - 1; i++) {
 											counter = i + 1;
-											embedContent += counter + " - " + x.body[i].name + "\n";
+											listEmbedContent += counter + " - " + x.body[i].name + "\n";
 										}
 
-										if (embedContent.length > 2048) {
+										if (listEmbedContent.length > 2048) {
 											throw new Error("Too much results.");
 										}
 
-										embed.setDescription("```\n" + embedContent + "```");
+										listEmbed.setDescription("```\n" + listEmbedContent + "```");
 
-										message.channel.send(embed);
+										message.channel.send(listEmbed);
 
 										message.channel
 											.awaitMessages(
@@ -411,11 +413,13 @@ client.on("message", message => {
 												if (!a) {
 													return message.channel.send("No se recibió ninguna respuesta.");
 												} else {
-													message.channel.send(
-														new Discord.Attachment(
-															x.body[a.content - 1].card_images[0].image_url
-														)
+													const selectedCardEmbed = new Discord.RichEmbed();
+
+													selectedCardEmbed.setImage(
+														x.body[a.content - 1].card_images[0].image_url
 													);
+
+													message.channel.send(selectedCardEmbed);
 												}
 											});
 									}
