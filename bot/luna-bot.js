@@ -6,6 +6,9 @@ const token = process.env.DISCORD_TOKEN;
 const prefix = process.env.DISCORD_PREFIX;
 const ownerID = process.env.DISCORD_DEV_ID;
 
+const errorHookID = process.env.ERROR_WEBHOOK_ID;
+const errorHookSecret = process.env.ERROR_WEBHOOK_SECRET;
+
 //Constantes de desarrollo.
 const Discord = require("discord.js"); //Importación de "discord.js".
 const client = new Discord.Client(); //Se crea una sesión.
@@ -74,7 +77,7 @@ function getDate(date) {
 	return strDate;
 }
 
-function reportCatchedError(error) {
+function reportError(error, message) {
 	const embed = new Discord.RichEmbed();
 
 	embed.setColor(10197915);
@@ -82,7 +85,25 @@ function reportCatchedError(error) {
 	embed.setDescription("```js\n" + error + "\n```");
 	embed.setFooter("Este es un error. Por favor, ten paciencia. El desarrollador se hará cargo, eventualmente.");
 
-	return embed;
+	message.channel.send(embed);
+
+	const hook = new Discord.WebhookClient(errorHookID, errorHookSecret);
+	const embedLog = new Discord.RichEmbed();
+
+	embedLog.setColor(10197915);
+	embedLog.setDescription("```js\n" + error + "\n```");
+	embedLog.addField("Tipo de Canal", message.channel.type, true);
+
+	if (message.channel.type === "text") {
+		embedLog.addField("Servidor", message.guild.name, true);
+		embedLog.addField("Enlace", message.url);
+	} else if (message.channel.type === "dm") {
+		embedLog.addField("Usuario", message.author.username + "#" + message.author.discriminator, true);
+	}
+
+	hook.send(embedLog);
+
+	console.log(error);
 }
 
 //Arranque de bot.
@@ -140,8 +161,7 @@ client.on("message", message => {
 							message.channel.send("**Lista de Comandos:**\n```\nhelp\nflip\nroll\ninfo\nsay```");
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -160,8 +180,7 @@ client.on("message", message => {
 							}
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -216,8 +235,7 @@ client.on("message", message => {
 							//console.log("Cantidad: " + quantity + "\n" + "Lados: " + dices);
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -225,8 +243,7 @@ client.on("message", message => {
 					try {
 						message.channel.send("_Esta función se encuentra en desarrollo._");
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -252,8 +269,7 @@ client.on("message", message => {
 
 						message.channel.send(embed);
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -273,8 +289,7 @@ client.on("message", message => {
 							}
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -282,8 +297,7 @@ client.on("message", message => {
 					try {
 						message.guild.members.get(client.user.id).setNickname("Luna");
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -315,8 +329,7 @@ client.on("message", message => {
 							message.channel.send("_Va a ser que no._ <:evAnimeShrug:654768549725863936>");
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 
@@ -341,8 +354,84 @@ client.on("message", message => {
 
 						message.channel.send(embed);
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
+					}
+				}
+
+				if (command === "ygo") {
+					try {
+						if (content === "") {
+							message.channel.send("Debes especificar el nombre de la carta a buscar.");
+						} else {
+							const fetch = require("node-superfetch");
+
+							const term = content.replace(/ /g, "%20");
+
+							fetch
+								.get(`https://db.ygoprodeck.com/api/v5/cardinfo.php?fname=${term}`)
+								.then(x => {
+									if (x.body.length == 1) {
+										message.channel.send(
+											new Discord.Attachment(x.body[0].card_images[0].image_url)
+										);
+									} else if (x.body.length > 1) {
+										const embed = new Discord.RichEmbed();
+
+										embed.setColor(10197915);
+										embed.setTitle("Elige una carta");
+
+										let embedContent = "";
+
+										for (i = 0; i <= x.body.length - 1; i++) {
+											counter = i + 1;
+											embedContent += counter + " - " + x.body[i].name + "\n";
+										}
+
+										if (embedContent.length > 2048) {
+											throw new Error("Too much results.");
+										}
+
+										embed.setDescription("```\n" + embedContent + "```");
+
+										message.channel.send(embed);
+
+										message.channel
+											.awaitMessages(
+												m =>
+													m.author.id === message.author.id &&
+													m.content != "" &&
+													m.content < x.body.length + 1,
+												{
+													max: 1,
+													time: 30000
+												}
+											)
+											.then(a => {
+												a = a.first();
+												if (!a) {
+													return message.channel.send("No se recibió ninguna respuesta.");
+												} else {
+													message.channel.send(
+														new Discord.Attachment(
+															x.body[a.content - 1].card_images[0].image_url
+														)
+													);
+												}
+											});
+									}
+								})
+								.catch(e => {
+									if (e.status === 400) {
+										message.channel.send(
+											"No se ha encontrado ninguna carta que mencione el término que has buscado."
+										);
+									} else {
+										reportError(e, message);
+									}
+								});
+						}
+					} catch (err) {
+						reportError(err, message);
 					}
 				}
 
@@ -360,8 +449,7 @@ client.on("message", message => {
 							message.channel.send("_Va a ser que no._ <:evAnimeShrug:654768549725863936>");
 						}
 					} catch (err) {
-						message.channel.send(reportCatchedError(err));
-						console.error(err);
+						reportError(err, message);
 					}
 				}
 			} else {
@@ -379,7 +467,7 @@ client.on("message", message => {
 					return;
 				}
 			} catch (err) {
-				message.channel.send(reportCatchedError(err));
+				message.channel.send(reportError(err));
 				console.error(err);
 			}
 		}
