@@ -368,7 +368,7 @@ client.on("message", message => {
 							const term = content.replace(/ /g, "%20");
 
 							fetch
-								.get(`https://db.ygoprodeck.com/api/v5/cardinfo.php?fname=${term}`)
+								.get("https://db.ygoprodeck.com/api/v5/cardinfo.php?fname=" + term)
 								.then(x => {
 									if (x.body.length == 1) {
 										const singleCardEmbed = new Discord.RichEmbed();
