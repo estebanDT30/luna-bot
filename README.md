@@ -6,10 +6,10 @@
 
 ### https://estebandt30.github.io/luna-bot/
 
-### Creado por: estebanDT30
-
-### También conocido como: GameBoy0665
-
 Un bot para Discord. Espero que sea capaz de hacer un montón de cosas que otros bots hacen.
 
 _Por ahora, un pasatiempo. Un proyecto personal. Lo siento, no habrán avances frecuentes._
+
+## NOTA
+
+He decidido dar de baja el proyecto, y al bot. No tenía ninguna utilidad real, y he perdido el interés. Dejo el repositorio archivado por si a alguien le interesa el proyecto. Son libres de usarlo como gusten.
